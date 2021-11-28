@@ -1,2 +1,4 @@
 # imageSimilarity
-Görüntü benzerlik tespiti
+Görüntü benzerlik tespiti  
+  
+pip install sewar
