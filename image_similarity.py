@@ -1,13 +1,11 @@
 import cv2
 import random
 import os
+import base64
 
 class Similarity:
 
     def __init__(self):
-        self.class_list = ["eagle", "talvase"]
-        self.result_dict = {}
-        self.result_list = []
         self.data_name_list = os.listdir("data/")
 
     def image_black_and_white(self, image1, image2, low_th=127, high_th=255):
@@ -46,23 +44,32 @@ class Similarity:
         img2 = cv2.resize(image2, size, interpolation=cv2.INTER_AREA)
         return img1, img2
 
-    def result(self, image1):
+    def black_white_result(self, image1_base64):
+        rnd = random.randint(10000, 99999)
+        with open("save_image/save_"+str(rnd)+".jpg", "wb") as fh:
+            fh.write(base64.decodebytes(image1_base64))
+        result_dict = {}
+        image1 = cv2.imread("save_image/save_"+str(rnd)+".jpg")
+        result_list = []
         for img_name in self.data_name_list:
             image = cv2.imread("data/"+img_name)
-            res_im1, res_im2 = Similar.image_resize(image, image1, (250, 250))
-            bw_im1, bw_im2 = Similar.image_black_and_white(res_im1, res_im2)
-            percent = Similar.similartiy_black_white_point(bw_im1, bw_im2)
+            res_im1, res_im2 = self.image_resize(image, image1, (250, 250))
+            bw_im1, bw_im2 = self.image_black_and_white(res_im1, res_im2)
+            percent = self.similartiy_black_white_point(bw_im1, bw_im2)
             if percent == 100:
                 rnd = random.uniform(88.0, 97.0)
-                self.result_dict.update({rnd: img_name[:-4]})
+                result_dict.update({rnd: img_name[:-4]})
+                result_list.append(rnd)
             else:
-                self.result_dict.update({percent: img_name[:-4]})
+                result_dict.update({percent: img_name[:-4]})
+                result_list.append(percent)
+        return result_dict[max(result_list)]
 
-if __name__ == "__main__":
-    Similar = Similarity()
-    send = cv2.imread("test.jpg")
-    Similar.result(send)
-    print(Similar.result_dict)
+# if __name__ == "__main__":
+#     Similar = Similarity()
+#     send = cv2.imread("test.jpg")
+#     print(Similar.black_white_result(send))
+
 
 
 
