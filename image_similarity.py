@@ -65,10 +65,7 @@ class Similarity:
                 result_list.append(percent)
         return result_dict[max(result_list)]
 
-# if __name__ == "__main__":
-#     Similar = Similarity()
-#     send = cv2.imread("test.jpg")
-#     print(Similar.black_white_result(send))
+
 
 
 
