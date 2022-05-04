@@ -1,5 +1,6 @@
 from flask import Flask,request
 import cv2
+import post_image_base64 as p_img
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -18,6 +19,13 @@ def img():
 	img_name = request.form['img_name']
 	img = cv2.imread(img_name)
 	return str(img)
+
+@app.route('/similar',methods=['POST'])
+def similar():
+	print('[INFO]--[test]--[FUNCTION]')
+	img_name = request.form['img_name']
+	result = p_img.results(img_name)
+	return str(result)
 
 if __name__ == '__main__':
 	app.run()
