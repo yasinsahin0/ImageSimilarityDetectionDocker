@@ -1,6 +1,6 @@
 from flask import Flask,request
-import cv2
 import post_image_base64 as p_img
+import image_similarity as sim
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -16,9 +16,10 @@ def test():
 @app.route('/img',methods=['POST'])
 def img():
 	print('[INFO]--[test]--[FUNCTION]')
-	img_name = request.form['img_name']
-	img = cv2.imread(img_name)
-	return str(img)
+	img_name = request.form['img_base64']
+	similar = sim.Similarity()
+	res = similar.black_white_result(img_name)
+	return str(res)
 
 @app.route('/similar',methods=['POST'])
 def similar():

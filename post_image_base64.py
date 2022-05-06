@@ -8,3 +8,4 @@ def results(image_name):
     similar = sim.Similarity()
     return similar.black_white_result(encoded_string)
 
+# results("data/nane.jpg")
