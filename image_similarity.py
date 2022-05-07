@@ -46,8 +46,11 @@ class Similarity:
 
     def black_white_result(self, image1_base64):
         rnd = random.randint(10000, 99999)
-        with open("save_image/save_"+str(rnd)+".jpg", "wb") as fh:
-            fh.write(base64.decodebytes(image1_base64))
+        try:
+            with open("save_image/save_" + str(rnd) + ".jpg", "wb") as fh:
+                fh.write(base64.b64decode(image1_base64))
+        except Exception as e:
+            return "exp"
         result_dict = {}
         image1 = cv2.imread("save_image/save_"+str(rnd)+".jpg")
         result_list = []
@@ -63,7 +66,9 @@ class Similarity:
             else:
                 result_dict.update({percent: img_name[:-4]})
                 result_list.append(percent)
-        return result_dict[max(result_list)]
+        dct = {"name":result_dict[max(result_list)],
+               "skor":max(result_list)}
+        return dct
 
 
 
