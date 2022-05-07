@@ -55,17 +55,18 @@ class Similarity:
         image1 = cv2.imread("save_image/save_"+str(rnd)+".jpg")
         result_list = []
         for img_name in self.data_name_list:
-            image = cv2.imread("data/"+img_name)
-            res_im1, res_im2 = self.image_resize(image, image1, (250, 250))
-            bw_im1, bw_im2 = self.image_black_and_white(res_im1, res_im2)
-            percent = self.similartiy_black_white_point(bw_im1, bw_im2)
-            if percent == 100:
-                rnd = random.uniform(88.0, 97.0)
-                result_dict.update({rnd: img_name[:-4]})
-                result_list.append(rnd)
-            else:
-                result_dict.update({percent: img_name[:-4]})
-                result_list.append(percent)
+            if img_name[3:] == ".jpg":
+                image = cv2.imread("data/"+img_name)
+                res_im1, res_im2 = self.image_resize(image, image1, (250, 250))
+                bw_im1, bw_im2 = self.image_black_and_white(res_im1, res_im2)
+                percent = self.similartiy_black_white_point(bw_im1, bw_im2)
+                if percent == 100:
+                    rnd = random.uniform(88.0, 97.0)
+                    result_dict.update({rnd: img_name[:-4]})
+                    result_list.append(rnd)
+                else:
+                    result_dict.update({percent: img_name[:-4]})
+                    result_list.append(percent)
         dct = {"name":result_dict[max(result_list)],
                "skor":max(result_list)}
         return dct
