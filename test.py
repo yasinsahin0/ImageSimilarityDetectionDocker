@@ -5,11 +5,10 @@ import image_similarity as sim
 with open("data/eagle.jpg", "rb") as image_file:
     encoded_string = base64.b64encode(image_file.read())
 
-a = "ada.jpg"
-print(a[3:])
+
+sm = sim.Similarity()
+print(sm.black_white_result(encoded_string))
 """
-
-
 import requests
 
 url = "http://172.105.73.62:5000/img"
