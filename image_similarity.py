@@ -7,6 +7,7 @@ class Similarity:
 
     def __init__(self):
         self.data_name_list = os.listdir("data/")
+        self.fixed = 100
 
     def image_black_and_white(self, image1, image2, low_th=127, high_th=255):
         gray_image1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
@@ -61,17 +62,31 @@ class Similarity:
                 res_im1, res_im2 = self.image_resize(image, image1, (250, 250))
                 bw_im1, bw_im2 = self.image_black_and_white(res_im1, res_im2)
                 percent = self.similartiy_black_white_point(bw_im1, bw_im2)
-                if percent == 100:
+                if percent == self.fixed:
                     rnd = random.uniform(88.0, 97.0)
                     result_dict.update({rnd: img_name[:-4]})
                     result_list.append(rnd)
+
                 else:
                     result_dict.update({percent: img_name[:-4]})
                     result_list.append(percent)
-        print("a :",result_dict[max(result_list)])
-
-        dct = {"name":result_dict[max(result_list)],
+        # print("return : ",result_dict[max(result_list)])
+        name = result_dict[max(result_list)]
+        name = name.replace("0", "")
+        name = name.replace("1", "")
+        name = name.replace("2", "")
+        name = name.replace("3", "")
+        name = name.replace("4", "")
+        name = name.replace("5", "")
+        name = name.replace("6", "")
+        name = name.replace("7", "")
+        name = name.replace("8", "")
+        name = name.replace("9", "")
+        if name == "tanımsız":
+            name = "tanımlanamadı"
+        dct = {"name":name,
                "skor":max(result_list)}
+        # print(dct)
         return dct
 
 
