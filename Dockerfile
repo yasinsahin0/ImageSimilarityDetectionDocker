@@ -1,6 +1,5 @@
 FROM python:3.9
 
-LABEL mantainer="Baher Elnaggar <eng.baher77@gmail.com>"
 
 WORKDIR /main
 
